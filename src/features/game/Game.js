@@ -18,7 +18,14 @@ export function Game() {
 
   return (
     <div>
-      {playerName}
+      {playerName}<br></br>
+      MANUAL REFRESH OF GAME (FOR NOW)<br></br>
+      OTHER PLAYERS STATE INC TURN<br></br>
+      LAST CARDS PLAYED BY WHO<br></br>
+      TOP CARDS / ACTIVE CARD<br></br>
+      YOUR HAND<br></br>
+      OPTIONS OF WHAT TO PLAY (select)<br></br>
+      TAKE TURN (button)<br></br>
     </div>
   );
 }

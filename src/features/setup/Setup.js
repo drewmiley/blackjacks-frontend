@@ -7,7 +7,6 @@ import {
   incrementAsync,
   selectCount,
 } from './setupSlice';
-import styles from './Setup.module.css';
 
 export function Setup() {
   const count = useSelector(selectCount);
@@ -16,45 +15,20 @@ export function Setup() {
 
   return (
     <div>
-      <div className={styles.row}>
         <button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+            onClick={() =>
+                dispatch(incrementByAmount(Number(incrementAmount) || 0))
+            }
         >
-          +
+            Init Game Button
         </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          -
-        </button>
-      </div>
-      <div className={styles.row}>
+        Text Input to Enter Player Names
+        <br></br>
         <input
-          className={styles.textbox}
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={e => setIncrementAmount(e.target.value)}
+            aria-label="Set increment amount"
+            value={incrementAmount}
+            onChange={e => setIncrementAmount(e.target.value)}
         />
-        <button
-          className={styles.button}
-          onClick={() =>
-            dispatch(incrementByAmount(Number(incrementAmount) || 0))
-          }
-        >
-          Add Amount
-        </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
-        >
-          Add Async
-        </button>
-      </div>
     </div>
   );
 }
