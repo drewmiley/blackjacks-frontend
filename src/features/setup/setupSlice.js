@@ -29,3 +29,27 @@ export const incrementAsync = amount => dispatch => {
 export const selectCount = state => state.setup.value;
 
 export default setupSlice.reducer;
+
+// export const patientsSlice = createSlice({
+//     name: 'patients',
+//     initialState,
+//     reducers: {
+//       setPatients: (state, action) => {
+//         state.value = action.payload;
+//       },
+//     },
+// });
+
+// export const { setPatients } = patientsSlice.actions;
+
+// export const fetchUserIDs = () => async dispatch => {
+//   // NOTE: In future, this endpoint will contain much more information about the users (devices, status, location etc.)
+//   const response: Response = await fetch('http://localhost:8000/inventory/users');
+//   const results = await response.json();
+//   const userIDs = results.data;
+//   dispatch(setPatients(userIDs));
+// }
+
+// export const selectPatients = (state) => state.patients.value;
+
+// export default patientsSlice.reducer;

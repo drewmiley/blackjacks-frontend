@@ -32,3 +32,27 @@ export function Setup() {
     </div>
   );
 }
+
+// export function Patients() {
+//   const users = useSelector(selectPatients);
+//   const dispatch = useDispatch();
+
+//   const [isInit, setInit] = useState(false);
+//   const [locationFilter, setLocationFilter] = useState(locations[0]);
+//   const [idFilter, setIDFilter] = useState('');
+
+//   useEffect(() => {
+//     if (!isInit) {
+//       dispatch(fetchUserIDs());
+//       setInit(true);
+//     }
+//   }, [isInit, dispatch])
+
+//   return (
+//     <div className={styles.patients}>
+//         {getFilteredUsers().map((userID, i) =>
+//           <PatientRecord key={`user-${i}`} user={createObjectFromUser(userID)} />
+//         )}
+//     </div>
+//   );
+// }
