@@ -1,58 +1,32 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  selectCount,
+  createGame,
+  setupIsSuccessful,
 } from './setupSlice';
 
 export function Setup() {
-  const count = useSelector(selectCount);
+  const isSuccessful = useSelector(setupIsSuccessful);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [playerNames, setPlayerNames] = useState('D,S');
 
   return (
     <div>
         <button
             onClick={() =>
-                dispatch(incrementByAmount(Number(incrementAmount) || 0))
+                dispatch(createGame(playerNames))
             }
         >
             Init Game Button
         </button>
-        Text Input to Enter Player Names
         <br></br>
         <input
-            aria-label="Set increment amount"
-            value={incrementAmount}
-            onChange={e => setIncrementAmount(e.target.value)}
+            aria-label="Set players names separated by commas, no spaces"
+            value={playerNames}
+            onChange={e => setPlayerNames(e.target.value)}
         />
+        <br></br>
+        <div>{isSuccessful}</div>
     </div>
   );
 }
-
-// export function Patients() {
-//   const users = useSelector(selectPatients);
-//   const dispatch = useDispatch();
-
-//   const [isInit, setInit] = useState(false);
-//   const [locationFilter, setLocationFilter] = useState(locations[0]);
-//   const [idFilter, setIDFilter] = useState('');
-
-//   useEffect(() => {
-//     if (!isInit) {
-//       dispatch(fetchUserIDs());
-//       setInit(true);
-//     }
-//   }, [isInit, dispatch])
-
-//   return (
-//     <div className={styles.patients}>
-//         {getFilteredUsers().map((userID, i) =>
-//           <PatientRecord key={`user-${i}`} user={createObjectFromUser(userID)} />
-//         )}
-//     </div>
-//   );
-// }
