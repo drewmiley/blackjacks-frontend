@@ -15,10 +15,15 @@ export const setupSlice = createSlice({
 export const { setIsSuccessful } = setupSlice.actions;
 
 export const createGame = playerNames => async dispatch => {
-  console.log(playerNames);
-  const response = await fetch('http://localhost:8000/api/init/');
+  const response = await fetch('http://localhost:8000/api/init/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ players: playerNames.split(',') })
+    });
   const jsonResponse = await response.json();
-  dispatch(setIsSuccessful(jsonResponse));
+  dispatch(setIsSuccessful(jsonResponse.message));
 }
 
 export const setupIsSuccessful = state => state.setup.value;
