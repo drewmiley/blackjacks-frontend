@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,6 +10,8 @@ import { Setup } from './features/setup/Setup';
 import './App.css';
 
 export default function App() {
+    const [playerName, setPlayerName] = useState('');
+
     return (
       <Router>
         <div>
@@ -18,11 +20,14 @@ export default function App() {
               <Link to="/setup">Game Setup</Link>
             </li>
             <li>
-              UPDATE LINK TO USE TEXTBOX
-              <Link to="/game/d">Play As D</Link>
+              <input
+                aria-label="Set player name"
+                value={playerName}
+                onChange={e => setPlayerName(e.target.value)}
+              />
             </li>
             <li>
-              <Link to="/game/s">Play as S</Link>
+              <Link to={`/game/${playerName}`}>Play As {playerName}</Link>
             </li>
           </ul>
   
