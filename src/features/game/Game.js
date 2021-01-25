@@ -6,6 +6,46 @@ import {
   selectGameState
 } from './gameSlice';
 
+const displayPlayersState = ({ playerName, players, turnIndex }) => {
+  return (
+    <div>
+      PLAYERSSTATE
+    </div>
+  )
+};
+
+const displayLastCardsPlayed = ({ lastCardsPlayed, players, turnIndex }) => {
+  return (
+    <div>
+      LASTCARDSPLAYED
+    </div>
+  )
+};
+
+const displayActiveCards = ({ activeCardsPlayed }) => {
+  return (
+    <div>
+      ACTIVECARDS
+    </div>
+  )
+};
+
+const displayHandCards = ({ playerName, players }) => {
+    return (
+    <div>
+      HANDCARDS
+    </div>
+  )
+};
+
+const displayTurnOptions = ({ playerName, players, turnIndex }) => {
+  return (
+    <div>
+      TURNOPTIONS
+    </div>
+  )
+};
+
 export function Game() {
   const { playerName } = useParams();
   const gameState = useSelector(selectGameState);
@@ -25,10 +65,34 @@ export function Game() {
     <div>
       {playerName}<br></br>
       {gameState && <div>
-        {/* {gameState.lastCardsPlayed} */}
-        {/* {gameState.turnIndex} */}
-        {/* {gameState.activeCards} */}
-        {/* {gameState.players} */}
+        <div id='players-info'>
+          Players State: {displayPlayersState(gameState)}
+        </div>
+        <div id='card-pile'>
+          <div id='last-cards-played'>
+            Last Cards Played: {displayLastCardsPlayed(gameState)}
+          </div>
+          <div id='active-cards'>
+            Active Cards: {displayActiveCards(gameState)}
+          </div>
+        </div>
+        <div id='your-hand'>
+          <div id='hands-cards'>
+            Cards: {displayHandCards(gameState)}
+          </div>
+          <div id='turn-options'>
+            {displayTurnOptions(gameState)}
+          </div>
+          <div id='take-turn-button'>
+            <button
+              onClick={() =>
+                dispatch(fetchGameState(playerName))
+              }
+            >
+              Take Turn
+            </button>
+          </div>
+        </div>
       </div>}
       <br></br>
       <button
@@ -38,13 +102,6 @@ export function Game() {
       >
         MANUAL REFRESH OF GAME (FOR NOW)
       </button>
-      <br></br>
-      OTHER PLAYERS STATE INC TURN<br></br>
-      LAST CARDS PLAYED BY WHO<br></br>
-      TOP CARDS / ACTIVE CARD<br></br>
-      YOUR HAND<br></br>
-      OPTIONS OF WHAT TO PLAY (select)<br></br>
-      TAKE TURN (button)<br></br>
     </div>
   );
 }

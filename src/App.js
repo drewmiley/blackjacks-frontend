@@ -18,6 +18,7 @@ export default function App() {
               <Link to="/setup">Game Setup</Link>
             </li>
             <li>
+              UPDATE LINK TO USE TEXTBOX
               <Link to="/game/d">Play As D</Link>
             </li>
             <li>
