@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+// import { Hand, Card, CardBack } from 'react-deck-o-cards';
 import {
   fetchGameState,
   selectGameState
@@ -59,11 +60,22 @@ export function Game() {
     }
   }, [isInit, dispatch, playerName]);
 
-  console.log(gameState)
+  console.log(gameState);
+
+//   const defHandStyle = {
+//     maxHeight:'34vh',
+//     minHeight:'34vh',
+    
+//     maxWidth:'100vw',
+//     padding: 0,
+//   };
 
   return (
     <div>
       {playerName}<br></br>
+      {/* <Hand cards={[
+      { rank: 1, suit: 0 },
+    ]} hidden={false} style={defHandStyle} /> */}
       {gameState && <div>
         <div id='players-info'>
           Players State: {displayPlayersState(gameState)}
