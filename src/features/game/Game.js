@@ -72,7 +72,9 @@ export function Game() {
       {playerName}<br></br>
       <Hand cards={[
         { rank: 1, suit: 0 },
-        { rank: 1, suit: 0 },
+        { rank: 13, suit: 1 },
+        { rank: 10, suit: 2 },
+        { rank: 5, suit: 3 },
       ]} hidden={false} style={defHandStyle} />
       {gameState && <div>
         <div id='players-info'>
