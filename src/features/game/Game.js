@@ -1,25 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  selectCount,
+  fetchGameState,
+  selectGameState
 } from './gameSlice';
-import styles from './Game.module.css';
 
 export function Game() {
   const { playerName } = useParams();
-  const count = useSelector(selectCount);
+  const gameState = useSelector(selectGameState);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [isInit, setInit] = useState(false);
+
+  useEffect(() => {
+    if (!isInit) {
+      dispatch(fetchGameState(playerName));
+      setInit(true);
+    }
+  }, [isInit, dispatch, playerName]);
+
+  console.log(gameState)
 
   return (
     <div>
       {playerName}<br></br>
-      MANUAL REFRESH OF GAME (FOR NOW)<br></br>
+      {gameState && <div>
+        {/* {gameState.lastCardsPlayed} */}
+        {/* {gameState.turnIndex} */}
+        {/* {gameState.activeCards} */}
+        {/* {gameState.players} */}
+      </div>}
+      <br></br>
+      <button
+        onClick={() =>
+            dispatch(fetchGameState(playerName))
+        }
+      >
+        MANUAL REFRESH OF GAME (FOR NOW)
+      </button>
+      <br></br>
       OTHER PLAYERS STATE INC TURN<br></br>
       LAST CARDS PLAYED BY WHO<br></br>
       TOP CARDS / ACTIVE CARD<br></br>
