@@ -48,3 +48,34 @@ export function Game() {
     </div>
   );
 }
+
+// {
+//     "lastCardsPlayed": [
+//       {
+//         "_id": "600d92da389489d98849c54b",
+//         "value": "Queen",
+//         "suit": "Clubs"
+//       }
+//     ],
+//     "turnIndex": 0,
+//     "activeCards": {
+//       "_id": "600d92da389489d98849c55c",
+//       "value": "Queen",
+//       "suit": "Clubs",
+//       "king": false,
+//       "two": 0,
+//       "blackjacks": 0
+//     },
+//     "players": [
+//       {
+//         "name": "D",
+//         "handSize": 7,
+//         "isLastCard": false
+//       },
+//       {
+//         "name": "S",
+//         "handSize": 7,
+//         "isLastCard": false
+//       }
+//     ]
+//   }
