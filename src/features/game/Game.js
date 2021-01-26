@@ -7,17 +7,19 @@ import {
   selectGameState
 } from './gameSlice';
 
-const defHandStyle = {
-  maxHeight:'200px',
-  minHeight:'200px'
-};
-
 export function Game() {
   const { playerName } = useParams();
   const gameState = useSelector(selectGameState);
   const dispatch = useDispatch();
   const [isInit, setInit] = useState(false);
   const [value, setValue] = useState();
+
+  const defHandStyle = {
+    maxHeight:'200px',
+    minHeight:'200px'
+  };
+  const CARD_VALUES = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
+  const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
 
   useEffect(() => {
     if (!isInit) {
@@ -28,7 +30,7 @@ export function Game() {
 
   console.log(gameState);
 
-  const displayPlayersState = ({ playerName, players, turnIndex }) => {
+  const displayPlayersState = (playerName, { players, turnIndex }) => {
     return (
       <div>
         PLAYERSSTATE
@@ -41,23 +43,29 @@ export function Game() {
     return `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`;
   };
   
-  const displayActiveCards = ({ activeCardsPlayed }) => {
+  const displayActiveCards = ({ activeCards }) => {
+    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
     return (
       <div>
-        ACTIVECARDS
+        <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
+        <div>
+            <p>King: {activeCards.king.toString()}</p>
+            <p>Twos: {activeCards.two}</p>
+            <p>BlackJacks: {activeCards.blackjacks}</p>
+        </div>
       </div>
     )
   };
   
-  const displayHandCards = ({ playerName, players }) => {
-      return (
-      <div>
-        HANDCARDS
-      </div>
-    )
+  const displayHandCards = (playerName, { players }) => {
+      const hand = players.find(player => player.name === playerName).hand;
+      const displayedHand = hand
+        .map(card => ({ rank: CARD_VALUES.findIndex(d => d === card.value) + 1, suit: SUITS.findIndex(d => d === card.suit)}))
+        .sort((a, b) => 52 * a.suit - 52 * b.suit + a.rank - b.rank);
+      return <Hand cards={displayedHand} hidden={false} style={defHandStyle} />
   };
   
-  const displayTurnOptions = ({ playerName, players, turnIndex }) => {
+  const displayTurnOptions = (playerName, { players, turnIndex }) => {
     return (
       <div>
         TURNOPTIONS
@@ -67,17 +75,10 @@ export function Game() {
 
   return (
     <div>
-      {playerName}<br></br>
-      <Hand cards={[
-        { rank: 1, suit: 0 },
-        { rank: 13, suit: 1 },
-        { rank: 10, suit: 2 },
-        { rank: 5, suit: 3 },
-      ]} hidden={false} style={defHandStyle} />
       {gameState && <div>
         <div id='players-info'>
           <h4>Players State</h4>
-          {displayPlayersState(gameState)}
+          {displayPlayersState(playerName, gameState)}
         </div>
         <div id='card-pile'>
           <div id='last-cards-played'>
@@ -92,7 +93,7 @@ export function Game() {
         <div id='your-hand'>
           <div id='hands-cards'>
             <h4>Hand</h4>
-            {displayHandCards(gameState)}
+            {displayHandCards(playerName, gameState)}
           </div>
           <div id='turn-options'>
             <h4>Turn Options</h4>
@@ -100,7 +101,7 @@ export function Game() {
               <input type="radio" value="MALE" name="gender"/> Male
               <input type="radio" value="FEMALE" name="gender"/> Female
             </div>
-            {displayTurnOptions(gameState)}
+            {displayTurnOptions(playerName, gameState)}
           </div>
           <div id='take-turn-button'>
             <button
