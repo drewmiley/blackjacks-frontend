@@ -57,6 +57,7 @@ export function Game() {
   const gameState = useSelector(selectGameState);
   const dispatch = useDispatch();
   const [isInit, setInit] = useState(false);
+  const [value, setValue] = useState();
 
   useEffect(() => {
     if (!isInit) {
@@ -98,12 +99,16 @@ export function Game() {
           </div>
           <div id='turn-options'>
             <h4>Turn Options</h4>
+            <div onChange={e => setValue(e.target.value)}>
+              <input type="radio" value="MALE" name="gender"/> Male
+              <input type="radio" value="FEMALE" name="gender"/> Female
+            </div>
             {displayTurnOptions(gameState)}
           </div>
           <div id='take-turn-button'>
             <button
               onClick={() =>
-                dispatch(fetchGameState(playerName))
+                console.log(value)
               }
             >
               Take Turn
