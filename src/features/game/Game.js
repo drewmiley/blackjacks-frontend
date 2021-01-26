@@ -37,11 +37,8 @@ export function Game() {
   };
   
   const displayLastCardsPlayed = ({ lastCardsPlayed, players, turnIndex }) => {
-    return (
-      <div>
-        LASTCARDSPLAYED
-      </div>
-    )
+    const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
+    return `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`;
   };
   
   const displayActiveCards = ({ activeCardsPlayed }) => {
