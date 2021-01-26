@@ -4,15 +4,18 @@ import { useParams } from 'react-router-dom';
 import { Hand } from 'react-deck-o-cards';
 import {
   fetchGameState,
+  playCards,
   selectGameState
 } from './gameSlice';
+import styles from './Game.module.css';
 
 export function Game() {
   const { playerName } = useParams();
   const gameState = useSelector(selectGameState);
   const dispatch = useDispatch();
   const [isInit, setInit] = useState(false);
-  const [value, setValue] = useState();
+  const [cardsIndex, setCardsIndex] = useState();
+  const [nominationIndex, setNominationIndex] = useState();
 
   const defHandStyle = {
     maxHeight:'200px',
@@ -38,15 +41,12 @@ export function Game() {
     )
   };
   
-  const displayLastCardsPlayed = ({ lastCardsPlayed, players, turnIndex }) => {
+  const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
-    return `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`;
-  };
-  
-  const displayActiveCards = ({ activeCards }) => {
     const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
     return (
       <div>
+        <div>{`${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`}</div>
         <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
         <div>
             <p>King: {activeCards.king.toString()}</p>
@@ -66,55 +66,40 @@ export function Game() {
   };
   
   const displayTurnOptions = (playerName, { players, turnIndex }) => {
-    return (
-      <div>
-        TURNOPTIONS
-      </div>
-    )
+    const isPlayersTurn = players.findIndex(player => player.name === playerName) === turnIndex;
+    if (isPlayersTurn) {
+      const possibleCardsToPlay = players.find(player => player.name === playerName).possibleCardsToPlay;
+      const displayCardsText = cards => cards.map(card => `${card.value} of ${card.suit}`).join(', ');
+      return (
+        <>
+          <div onChange={e => setCardsIndex(e.target.value)}>
+            {possibleCardsToPlay.map((cards, i) => <label className={styles.displayBlock} key={i}>{displayCardsText(cards)}<input type='radio' value={i} name='turnOptions' /></label>)}
+          </div>
+          <button onClick={playCards(playerName, possibleCardsToPlay[cardsIndex], SUITS[nominationIndex])}>Take Turn</button>
+        </>
+      )
+    } else {
+      const whoseTurn = players[(turnIndex + players.length) % players.length].name;
+      return `${whoseTurn}'s turn`
+    }
   };
 
   return (
     <div>
       {gameState && <div>
         <div id='players-info'>
-          <h4>Players State</h4>
           {displayPlayersState(playerName, gameState)}
         </div>
-        <div id='card-pile'>
-          <div id='last-cards-played'>
-            <h4>Last Cards Played</h4>
-            {displayLastCardsPlayed(gameState)}
-          </div>
-          <div id='active-cards'>
-              <h4>Active Cards</h4>
-              {displayActiveCards(gameState)}
-          </div>
+        <div id='active-cards'>
+          {displayActiveCards(gameState)}
         </div>
-        <div id='your-hand'>
-          <div id='hands-cards'>
-            <h4>Hand</h4>
-            {displayHandCards(playerName, gameState)}
-          </div>
-          <div id='turn-options'>
-            <h4>Turn Options</h4>
-            <div onChange={e => setValue(e.target.value)}>
-              <input type="radio" value="MALE" name="gender"/> Male
-              <input type="radio" value="FEMALE" name="gender"/> Female
-            </div>
-            {displayTurnOptions(playerName, gameState)}
-          </div>
-          <div id='take-turn-button'>
-            <button
-              onClick={() =>
-                console.log(value)
-              }
-            >
-              Take Turn
-            </button>
-          </div>
+        <div id='hands-cards'>
+          {displayHandCards(playerName, gameState)}
+        </div>
+        <div id='turn-options'>
+          {displayTurnOptions(playerName, gameState)}
         </div>
       </div>}
-      <br></br>
       <button
         onClick={() =>
             dispatch(fetchGameState(playerName))
