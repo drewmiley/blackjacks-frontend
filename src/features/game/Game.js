@@ -78,21 +78,26 @@ export function Game() {
       ]} hidden={false} style={defHandStyle} />
       {gameState && <div>
         <div id='players-info'>
-          Players State: {displayPlayersState(gameState)}
+          <h4>Players State</h4>
+          {displayPlayersState(gameState)}
         </div>
         <div id='card-pile'>
           <div id='last-cards-played'>
-            Last Cards Played: {displayLastCardsPlayed(gameState)}
+            <h4>Last Cards Played</h4>
+            {displayLastCardsPlayed(gameState)}
           </div>
           <div id='active-cards'>
-            Active Cards: {displayActiveCards(gameState)}
+              <h4>Active Cards</h4>
+              {displayActiveCards(gameState)}
           </div>
         </div>
         <div id='your-hand'>
           <div id='hands-cards'>
-            Cards: {displayHandCards(gameState)}
+            <h4>Hand</h4>
+            {displayHandCards(gameState)}
           </div>
           <div id='turn-options'>
+            <h4>Turn Options</h4>
             {displayTurnOptions(gameState)}
           </div>
           <div id='take-turn-button'>
@@ -139,7 +144,65 @@ export function Game() {
 //       {
 //         "name": "D",
 //         "handSize": 7,
-//         "isLastCard": false
+//         "isLastCard": false,
+//         "hand": [
+//           {
+//             "_id": "600d92da389489d98849c54d",
+//             "value": "7",
+//             "suit": "Diamonds"
+//           },
+//           {
+//             "_id": "600d92da389489d98849c54e",
+//             "value": "7",
+//             "suit": "Spades"
+//           },
+//           {
+//             "_id": "600d92da389489d98849c54f",
+//             "value": "5",
+//             "suit": "Spades"
+//           },
+//           {
+//             "_id": "600d92da389489d98849c550",
+//             "value": "8",
+//             "suit": "Diamonds"
+//           },
+//           {
+//             "_id": "600d92da389489d98849c551",
+//             "value": "3",
+//             "suit": "Hearts"
+//           },
+//           {
+//             "_id": "600d92da389489d98849c552",
+//             "value": "9",
+//             "suit": "Clubs"
+//           },
+//           {
+//             "_id": "600d92da389489d98849c553",
+//             "value": "9",
+//             "suit": "Spades"
+//           }
+//         ],
+//         "possibleCardsToPlay": [
+//           [
+//             {
+//               "_id": "600d92da389489d98849c552",
+//               "value": "9",
+//               "suit": "Clubs"
+//             }
+//           ],
+//           [
+//             {
+//               "_id": "600d92da389489d98849c552",
+//               "value": "9",
+//               "suit": "Clubs"
+//             },
+//             {
+//               "_id": "600d92da389489d98849c553",
+//               "value": "9",
+//               "suit": "Spades"
+//             }
+//           ]
+//         ]
 //       },
 //       {
 //         "name": "S",
