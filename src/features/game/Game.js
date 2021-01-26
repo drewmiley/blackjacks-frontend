@@ -23,6 +23,7 @@ export function Game() {
   };
   const CARD_VALUES = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
   const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
+  const NOMINATION_VALUE = 'Ace';
 
   useEffect(() => {
     if (!isInit) {
@@ -75,6 +76,9 @@ export function Game() {
           <div onChange={e => setCardsIndex(e.target.value)}>
             {possibleCardsToPlay.map((cards, i) => <label className={styles.displayBlock} key={i}>{displayCardsText(cards)}<input type='radio' value={i} name='turnOptions' /></label>)}
           </div>
+          {true && <div>
+              Nomination Choice
+          </div>}
           <button onClick={playCards(playerName, possibleCardsToPlay[cardsIndex], SUITS[nominationIndex])}>Take Turn</button>
         </>
       )
