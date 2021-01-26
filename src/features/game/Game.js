@@ -12,46 +12,6 @@ const defHandStyle = {
   minHeight:'200px'
 };
 
-const displayPlayersState = ({ playerName, players, turnIndex }) => {
-  return (
-    <div>
-      PLAYERSSTATE
-    </div>
-  )
-};
-
-const displayLastCardsPlayed = ({ lastCardsPlayed, players, turnIndex }) => {
-  return (
-    <div>
-      LASTCARDSPLAYED
-    </div>
-  )
-};
-
-const displayActiveCards = ({ activeCardsPlayed }) => {
-  return (
-    <div>
-      ACTIVECARDS
-    </div>
-  )
-};
-
-const displayHandCards = ({ playerName, players }) => {
-    return (
-    <div>
-      HANDCARDS
-    </div>
-  )
-};
-
-const displayTurnOptions = ({ playerName, players, turnIndex }) => {
-  return (
-    <div>
-      TURNOPTIONS
-    </div>
-  )
-};
-
 export function Game() {
   const { playerName } = useParams();
   const gameState = useSelector(selectGameState);
@@ -67,6 +27,46 @@ export function Game() {
   }, [isInit, dispatch, playerName]);
 
   console.log(gameState);
+
+  const displayPlayersState = ({ playerName, players, turnIndex }) => {
+    return (
+      <div>
+        PLAYERSSTATE
+      </div>
+    )
+  };
+  
+  const displayLastCardsPlayed = ({ lastCardsPlayed, players, turnIndex }) => {
+    return (
+      <div>
+        LASTCARDSPLAYED
+      </div>
+    )
+  };
+  
+  const displayActiveCards = ({ activeCardsPlayed }) => {
+    return (
+      <div>
+        ACTIVECARDS
+      </div>
+    )
+  };
+  
+  const displayHandCards = ({ playerName, players }) => {
+      return (
+      <div>
+        HANDCARDS
+      </div>
+    )
+  };
+  
+  const displayTurnOptions = ({ playerName, players, turnIndex }) => {
+    return (
+      <div>
+        TURNOPTIONS
+      </div>
+    )
+  };
 
   return (
     <div>
