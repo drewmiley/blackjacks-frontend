@@ -37,7 +37,16 @@ export function Game() {
   const displayPlayersState = (playerName, { players, turnIndex }) => {
     return (
       <div>
-        PLAYERSSTATE
+        <table>
+          <thead>
+            <tr><th>Name</th>{players.map(player => <th>{player.name}</th>)}</tr>
+          </thead>
+          <tbody>
+            <tr><td>Hand Size</td>{players.map(player => <td>{player.handSize}</td>)}</tr>
+            <tr><td>On Last Card</td>{players.map(player => <td>{player.isLastCard ? 'Y': 'N'}</td>)}</tr>
+            <tr><td>Turn</td>{players.map((d, i) => <td>{i === turnIndex && 'Y'}</td>)}</tr>
+          </tbody>
+        </table>
       </div>
     )
   };
@@ -47,8 +56,8 @@ export function Game() {
     const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
     return (
       <div>
-        <div>{`${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`}</div>
         <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
+        <div>{`${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`}</div>
         <div>
             <p>King: {activeCards.king.toString()}</p>
             <p>Twos: {activeCards.two}</p>
@@ -95,7 +104,7 @@ export function Game() {
   return (
     <div>
       {gameState && <div>
-        <div id='players-info'>
+        <div class={styles.playersInfo}>
           {displayPlayersState(playerName, gameState)}
         </div>
         <div id='active-cards'>
