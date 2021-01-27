@@ -28,6 +28,14 @@ export const createGame = playerNames => async dispatch => {
   dispatch(setIsSuccessful(jsonResponse.message));
 }
 
+export const deleteGame = () => async dispatch => {
+    const response = await fetch(`${API_URL}clear`, {
+        method: 'DELETE'
+      });
+    const jsonResponse = await response.json();
+    dispatch(setIsSuccessful(jsonResponse.message));
+  }
+
 export const setupIsSuccessful = state => state.setup.value;
 
 export default setupSlice.reducer;

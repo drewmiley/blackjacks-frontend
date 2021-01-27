@@ -2,22 +2,21 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   createGame,
+  deleteGame,
+  deleteIsSuccessful,
   setupIsSuccessful,
 } from './setupSlice';
 
 export function Setup() {
-  const isSuccessful = useSelector(setupIsSuccessful);
+  const getSetupIsSuccessful = useSelector(setupIsSuccessful);
+  const getDeleteIsSuccessful = useSelector(deleteIsSuccessful);
   const dispatch = useDispatch();
   const [playerNames, setPlayerNames] = useState('D,S');
 
   return (
     <div>
-        <button
-            onClick={() =>
-                dispatch(createGame(playerNames))
-            }
-        >
-            Init Game Button
+        <button onClick={() => dispatch(createGame(playerNames))}>
+            Init Game With Players
         </button>
         <br></br>
         <input
@@ -26,7 +25,13 @@ export function Setup() {
             onChange={e => setPlayerNames(e.target.value)}
         />
         <br></br>
-        <div>{isSuccessful}</div>
+        <div>{getSetupIsSuccessful}</div>
+        <br></br>
+        <button onClick={() => dispatch(deleteGame())}>
+            Delete Game
+        </button>
+        <br></br>
+        <div>{getDeleteIsSuccessful}</div>
     </div>
   );
 }
