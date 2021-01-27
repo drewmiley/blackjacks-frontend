@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const API_URL = process.env.API_URL || 'http://localhost:8000/api/';
+
 export const gameSlice = createSlice({
   name: 'game',
   initialState: {
@@ -15,13 +17,13 @@ export const gameSlice = createSlice({
 export const { setGame } = gameSlice.actions;
 
 export const fetchGameState = playerName => async dispatch => {
-  const response = await fetch(`http://localhost:8000/api/state/${playerName}`);
+  const response = await fetch(`${API_URL}state/${playerName}`);
   const gameState = await response.json();
   dispatch(setGame(gameState));
 }
 
 export const playCards = (playerName, cards, nomination = null) => async dispatch => {
-  const response = await fetch(`http://localhost:8000/api/play/${playerName}`, {
+  const response = await fetch(`${API_URL}play/${playerName}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
