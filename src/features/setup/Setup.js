@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   createGame,
   deleteGame,
-  deleteIsSuccessful,
-  setupIsSuccessful,
+  getSetupResponse,
+  getDeleteResponse,
 } from './setupSlice';
 
 export function Setup() {
-  const getSetupIsSuccessful = useSelector(setupIsSuccessful);
-  const getDeleteIsSuccessful = useSelector(deleteIsSuccessful);
+  const setupResponse = useSelector(getSetupResponse);
+  const deleteResponse = useSelector(getDeleteResponse);
   const dispatch = useDispatch();
   const [playerNames, setPlayerNames] = useState('D,S');
 
@@ -25,13 +25,13 @@ export function Setup() {
             onChange={e => setPlayerNames(e.target.value)}
         />
         <br></br>
-        <div>{getSetupIsSuccessful}</div>
+        <div>{setupResponse}</div>
         <br></br>
         <button onClick={() => dispatch(deleteGame())}>
             Delete Game
         </button>
         <br></br>
-        <div>{getDeleteIsSuccessful}</div>
+        <div>{deleteResponse}</div>
     </div>
   );
 }

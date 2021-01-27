@@ -5,19 +5,25 @@ const API_URL = process.env.API_URL || 'http://localhost:8000/api/';
 export const setupSlice = createSlice({
   name: 'setup',
   initialState: {
-    value: null,
+    deleteResponse: null,
+    setupResponse: null,
   },
   reducers: {
-    setIsSuccessful: (state, action) => {
-      state.value = action.payload;
+    setSetupResponse: (state, action) => {
+      state.deleteResponse = null;
+      state.setupResponse = action.payload;
+    },
+    setDeleteResponse: (state, action) => {
+      state.setupResponse = null;
+      state.deleteResponse = action.payload;
     }
   },
 });
 
-export const { setIsSuccessful } = setupSlice.actions;
+const { setSetupResponse, setDeleteResponse } = setupSlice.actions;
 
 export const createGame = playerNames => async dispatch => {
-  const response = await fetch(`${API_URL}init/`, {
+  const response = await fetch(`${API_URL}init`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -25,7 +31,7 @@ export const createGame = playerNames => async dispatch => {
       body: JSON.stringify({ players: playerNames.split(',') })
     });
   const jsonResponse = await response.json();
-  dispatch(setIsSuccessful(jsonResponse.message));
+  dispatch(setSetupResponse(jsonResponse.message));
 }
 
 export const deleteGame = () => async dispatch => {
@@ -33,9 +39,10 @@ export const deleteGame = () => async dispatch => {
         method: 'DELETE'
       });
     const jsonResponse = await response.json();
-    dispatch(setIsSuccessful(jsonResponse.message));
+    dispatch(setDeleteResponse(jsonResponse.message));
   }
 
-export const setupIsSuccessful = state => state.setup.value;
+export const getSetupResponse = state => state.setup.setupResponse;
+export const getDeleteResponse = state => state.setup.deleteResponse;
 
 export default setupSlice.reducer;
