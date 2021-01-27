@@ -71,15 +71,19 @@ export function Game() {
     if (isPlayersTurn) {
       const possibleCardsToPlay = players.find(player => player.name === playerName).possibleCardsToPlay;
       const displayCardsText = cards => cards.map(card => `${card.value} of ${card.suit}`).join(', ');
+      const isNomination = cardsIndex >= 0 && possibleCardsToPlay[cardsIndex][possibleCardsToPlay[cardsIndex].length - 1].value === NOMINATION_VALUE;
       return (
         <>
           <div onChange={e => setCardsIndex(e.target.value)}>
             {possibleCardsToPlay.map((cards, i) => <label className={styles.displayBlock} key={i}>{displayCardsText(cards)}<input type='radio' value={i} name='turnOptions' /></label>)}
           </div>
-          {true && <div>
+          {isNomination && <div>
               Nomination Choice
+              <div onChange={e => setNominationIndex(e.target.value)}>
+                {possibleCardsToPlay.map((cards, i) => <label className={styles.displayBlock} key={i}>{displayCardsText(cards)}<input type='radio' value={i} name='turnOptions' /></label>)}
+              </div>
           </div>}
-          <button onClick={playCards(playerName, possibleCardsToPlay[cardsIndex], SUITS[nominationIndex])}>Take Turn</button>
+          <button onClick={playCards(playerName, possibleCardsToPlay[cardsIndex], isNomination && SUITS[nominationIndex])}>Take Turn</button>
         </>
       )
     } else {
