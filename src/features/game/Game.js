@@ -82,7 +82,8 @@ export function Game() {
     if (isPlayersTurn) {
       const possibleCardsToPlay = players.find(player => player.name === playerName).possibleCardsToPlay;
       const displayCardsText = cards => cards.length ? cards.map(card => `${card.value} of ${card.suit}`).join(', ') : 'Miss Turn / Pick Up';
-      const isNomination = cardsIndex >= 0 && possibleCardsToPlay[cardsIndex][possibleCardsToPlay[cardsIndex].length - 1].value === NOMINATION_VALUE;
+      const isNomination = parseInt(cardsIndex) >= 0 && possibleCardsToPlay[cardsIndex].length > 0
+        && possibleCardsToPlay[cardsIndex][possibleCardsToPlay[cardsIndex].length - 1].value === NOMINATION_VALUE;
       return (
         <>
           <div onChange={e => setCardsIndex(e.target.value)}>
@@ -129,92 +130,3 @@ export function Game() {
     </div>
   );
 }
-
-// {
-//     "lastCardsPlayed": [
-//       {
-//         "_id": "600d92da389489d98849c54b",
-//         "value": "Queen",
-//         "suit": "Clubs"
-//       }
-//     ],
-//     "turnIndex": 0,
-//     "activeCards": {
-//       "_id": "600d92da389489d98849c55c",
-//       "value": "Queen",
-//       "suit": "Clubs",
-//       "king": false,
-//       "two": 0,
-//       "blackjacks": 0
-//     },
-//     "players": [
-//       {
-//         "name": "D",
-//         "handSize": 7,
-//         "isLastCard": false,
-//         "hand": [
-//           {
-//             "_id": "600d92da389489d98849c54d",
-//             "value": "7",
-//             "suit": "Diamonds"
-//           },
-//           {
-//             "_id": "600d92da389489d98849c54e",
-//             "value": "7",
-//             "suit": "Spades"
-//           },
-//           {
-//             "_id": "600d92da389489d98849c54f",
-//             "value": "5",
-//             "suit": "Spades"
-//           },
-//           {
-//             "_id": "600d92da389489d98849c550",
-//             "value": "8",
-//             "suit": "Diamonds"
-//           },
-//           {
-//             "_id": "600d92da389489d98849c551",
-//             "value": "3",
-//             "suit": "Hearts"
-//           },
-//           {
-//             "_id": "600d92da389489d98849c552",
-//             "value": "9",
-//             "suit": "Clubs"
-//           },
-//           {
-//             "_id": "600d92da389489d98849c553",
-//             "value": "9",
-//             "suit": "Spades"
-//           }
-//         ],
-//         "possibleCardsToPlay": [
-//           [
-//             {
-//               "_id": "600d92da389489d98849c552",
-//               "value": "9",
-//               "suit": "Clubs"
-//             }
-//           ],
-//           [
-//             {
-//               "_id": "600d92da389489d98849c552",
-//               "value": "9",
-//               "suit": "Clubs"
-//             },
-//             {
-//               "_id": "600d92da389489d98849c553",
-//               "value": "9",
-//               "suit": "Spades"
-//             }
-//           ]
-//         ]
-//       },
-//       {
-//         "name": "S",
-//         "handSize": 7,
-//         "isLastCard": false
-//       }
-//     ]
-//   }
