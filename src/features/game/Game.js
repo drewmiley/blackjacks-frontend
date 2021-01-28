@@ -54,10 +54,12 @@ export function Game() {
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
     const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
+    //TODO: This is somewhat hacky
+    const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
     return (
       <div>
         <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
-        <div>{`${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`}</div>
+        {!isInitialPileCard &&  <div>{`${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}`}</div>}
         <div>
             <p>King: {activeCards.king.toString()}</p>
             <p>Twos: {activeCards.two}</p>
