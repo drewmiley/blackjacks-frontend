@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const API_URL = process.env.API_URL || 'http://localhost:8000/api/';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/';
 
 export const setupSlice = createSlice({
   name: 'setup',
