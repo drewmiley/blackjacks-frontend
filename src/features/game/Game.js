@@ -51,14 +51,14 @@ export function Game() {
   
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
-    const card = { rank: CARD_VALUES.findIndex(d => d === lastCardsPlayed[lastCardsPlayed.length - 1].value) + 1, suit: SUITS.findIndex(d => d === lastCardsPlayed[lastCardsPlayed.length - 1].suit)};
+    const isNominatedSuit = activeCards.value === null;
+    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
-    const isNominatedSuit = activeCards.value === null;
     const lastPlayedText = `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}`;
     return (
       <div>
-        <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
+        {isNominatedSuit ? <div>Nominated suit is {activeCards.suit}</div> : <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>}
         {!isInitialPileCard &&  <div>{lastPlayedText}</div>}
         <div>
             <p>King: {activeCards.king.toString()}</p>
