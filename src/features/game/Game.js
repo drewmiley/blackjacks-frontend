@@ -25,12 +25,16 @@ export function Game() {
   const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
   const NOMINATION_VALUE = 'Ace';
 
-  useEffect(() => {
+  const hitService = () => dispatch(fetchGameState(playerName));
+
+  useEffect(() =>{
     if (!isInit) {
-      dispatch(fetchGameState(playerName));
-      setInit(true);
+        hitService();
+        setInit(true);
     }
-  }, [isInit, dispatch, playerName]);
+    const interval = setInterval(hitService, 3000);
+    return () => clearInterval(interval);
+  }, [isInit]);
 
   const displayPlayersState = (playerName, { players, turnIndex }) => {
     return (
@@ -120,13 +124,6 @@ export function Game() {
           {displayTurnOptions(playerName, gameState)}
         </div>
       </div>}
-      <button
-        onClick={() =>
-            dispatch(fetchGameState(playerName))
-        }
-      >
-        MANUAL REFRESH OF GAME (FOR NOW)
-      </button>
     </div>
   );
 }
