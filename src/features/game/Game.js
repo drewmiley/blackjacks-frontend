@@ -104,7 +104,7 @@ export function Game() {
   return (
     <div>
       {gameState && <div>
-        <div class={styles.playersInfo}>
+        <div className={styles.playersInfo}>
           {displayPlayersState(playerName, gameState)}
         </div>
         <div id='active-cards'>
