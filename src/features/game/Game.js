@@ -81,7 +81,7 @@ export function Game() {
     const isPlayersTurn = players.findIndex(player => player.name === playerName) === turnIndex;
     if (isPlayersTurn) {
       const possibleCardsToPlay = players.find(player => player.name === playerName).possibleCardsToPlay;
-      const displayCardsText = cards => cards.map(card => `${card.value} of ${card.suit}`).join(', ');
+      const displayCardsText = cards => cards.length ? cards.map(card => `${card.value} of ${card.suit}`).join(', ') : 'Miss Turn / Pick Up';
       const isNomination = cardsIndex >= 0 && possibleCardsToPlay[cardsIndex][possibleCardsToPlay[cardsIndex].length - 1].value === NOMINATION_VALUE;
       return (
         <>
