@@ -32,8 +32,6 @@ export function Game() {
     }
   }, [isInit, dispatch, playerName]);
 
-  console.log(gameState);
-
   const displayPlayersState = (playerName, { players, turnIndex }) => {
     return (
       <div>
@@ -57,7 +55,7 @@ export function Game() {
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
     const isNominatedSuit = activeCards.value === null;
-    const lastPlayedText = `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit && `, nominated ${activeCards.suit}`}`
+    const lastPlayedText = `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}`;
     return (
       <div>
         <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
@@ -96,7 +94,7 @@ export function Game() {
                 {SUITS.map((suit, i) => <label className={styles.displayBlock} key={i}>{suit}<input type='radio' value={i} name='nominationOptions' /></label>)}
               </div>
           </div>}
-          <button onClick={playCards(playerName, possibleCardsToPlay[cardsIndex], isNomination && SUITS[nominationIndex])}>Take Turn</button>
+          <button onClick={() => dispatch(playCards(playerName, possibleCardsToPlay[cardsIndex], isNomination && SUITS[nominationIndex]))}>Take Turn</button>
         </>
       )
     } else {
