@@ -8,6 +8,7 @@ import {
   selectGameState
 } from './gameSlice';
 import styles from './Game.module.css';
+import { createGame } from '../setup/setupSlice';
 
 export function Game() {
   const { playerName } = useParams();
@@ -34,7 +35,7 @@ export function Game() {
     }
     const interval = setInterval(hitService, 3000);
     return () => clearInterval(interval);
-  }, [isInit]);
+  }, [isInit, hitService]);
 
   const displayPlayersState = (playerName, { players, turnIndex }) => {
     return (
@@ -108,6 +109,15 @@ export function Game() {
     }
   };
 
+  const playAgainButton = (playerName, { players }) => {
+    const gameIsFinished = players.some(player => player.handSize === 0);
+    const playerNames = players.map(player => player.name);
+    const rotatedNames = [playerNames[playerNames.length - 1]].concat([playerNames.slice(0, playerNames.length - 1)]).join(',');
+    if (gameIsFinished) {
+        return <button onClick={() => dispatch(createGame(rotatedNames, true))}>Play Again</button>
+    }
+  }
+
   return (
     <div>
       {gameState && <div>
@@ -123,6 +133,7 @@ export function Game() {
         <div id='turn-options'>
           {displayTurnOptions(playerName, gameState)}
         </div>
+        {playAgainButton(playerName, gameState)}
       </div>}
     </div>
   );
