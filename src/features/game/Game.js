@@ -91,7 +91,7 @@ export function Game() {
           {isNomination && <div>
               Nomination Choice
               <div onChange={e => setNominationIndex(e.target.value)}>
-                {possibleCardsToPlay.map((cards, i) => <label className={styles.displayBlock} key={i}>{displayCardsText(cards)}<input type='radio' value={i} name='turnOptions' /></label>)}
+                {SUITS.map((suit, i) => <label className={styles.displayBlock} key={i}>{suit}<input type='radio' value={i} name='nominationOptions' /></label>)}
               </div>
           </div>}
           <button onClick={playCards(playerName, possibleCardsToPlay[cardsIndex], isNomination && SUITS[nominationIndex])}>Take Turn</button>
