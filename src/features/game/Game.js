@@ -65,6 +65,7 @@ export function Game() {
       <div>
         {isNominatedSuit ? <div>Nominated suit is {activeCards.suit}</div> : <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>}
         {!isInitialPileCard &&  <div>{lastPlayedText}</div>}
+        {/* TODO: This is Blackjacks specific */}
         <div>
             <p>King: {activeCards.king.toString()}</p>
             <p>Twos: {activeCards.two}</p>
