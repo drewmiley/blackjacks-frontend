@@ -57,7 +57,8 @@ export function Game() {
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
     const isNominatedSuit = activeCards.value === null;
-    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit) };
+    const suitIndex = SUITS.findIndex(d => d === activeCards.suit);
+    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: suitIndex };
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
     const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
@@ -66,7 +67,14 @@ export function Game() {
     return (
       <div>
         {isNominatedSuit ?
-            <div><div className={styles.infoText}>Nominated suit is {activeCards.suit}</div><Hand cards={[{ rank: 1, suit: SUITS.findIndex(d => d === activeCards.suit) }]} hidden={false} style={defHandStyle} /></div>:
+            (
+                <div>
+                    <div className={styles.infoText}>
+                        {suitIndex > -1 ? `Nominated suit is ${activeCards.suit}` : `Initial card is Ace of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
+                    </div>
+                    <Hand cards={[{ rank: 1, suit: suitIndex > -1 ? suitIndex : SUITS.findIndex(d => d === lastCardsPlayed[lastCardsPlayed.length -1].suit) }]} hidden={false} style={defHandStyle} />
+                </div>
+            ) :
             <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
         }
         {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
