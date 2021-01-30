@@ -82,10 +82,14 @@ export function Game() {
   
   const displayHandCards = (playerName, { players }) => {
       const hand = players.find(player => player.name === playerName).hand;
-      const displayedHand = hand
-        .map(card => ({ rank: CARD_VALUES.findIndex(d => d === card.value) + 1, suit: SUITS.findIndex(d => d === card.suit)}))
-        .sort((a, b) => 52 * a.suit - 52 * b.suit + a.rank - b.rank);
-      return <Hand cards={displayedHand} hidden={false} style={defHandStyle} />
+      if (hand) {
+        const displayedHand = hand
+          .map(card => ({ rank: CARD_VALUES.findIndex(d => d === card.value) + 1, suit: SUITS.findIndex(d => d === card.suit)}))
+          .sort((a, b) => 52 * a.suit - 52 * b.suit + a.rank - b.rank);
+        return <Hand cards={displayedHand} hidden={false} style={defHandStyle} />
+      } else {
+          return <div className={styles.infoText}>PLEASE REFRESH YOUR PAGE</div>
+      }
   };
   
   const displayTurnOptions = (playerName, { players, turnIndex }) => {
