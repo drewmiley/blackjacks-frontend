@@ -57,6 +57,7 @@ export function Game() {
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
     const isNominatedSuit = activeCards.value === null;
+    // TODO: Can probably use isInitialPileCard in place of suit index
     const suitIndex = SUITS.findIndex(d => d === activeCards.suit);
     const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: suitIndex };
     //TODO: This is somewhat hacky
@@ -64,6 +65,7 @@ export function Game() {
     const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
         `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}` :
         `${lastPlayer} picked up / missed turn`;
+    // TODO: This is all blackjacks specific
     return (
       <div>
         {isNominatedSuit ?
@@ -78,7 +80,6 @@ export function Game() {
             <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
         }
         {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
-        {/* TODO: This is Blackjacks specific */}
         <div>
             <p>King: {activeCards.king.toString()}</p>
             <p>Twos: {activeCards.two}</p>
