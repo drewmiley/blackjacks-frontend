@@ -57,7 +57,7 @@ export function Game() {
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
     const isNominatedSuit = activeCards.value === null;
-    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
+    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit) };
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
     const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
@@ -65,8 +65,11 @@ export function Game() {
         `${lastPlayer} picked up / missed turn`;
     return (
       <div>
-        {isNominatedSuit ? <div>Nominated suit is {activeCards.suit}</div> : <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>}
-        {!isInitialPileCard &&  <div>{lastPlayedText}</div>}
+        {isNominatedSuit ?
+            <div><div className={styles.infoText}>Nominated suit is {activeCards.suit}</div><Hand cards={[{ rank: 1, suit: SUITS.findIndex(d => d === activeCards.suit) }]} hidden={false} style={defHandStyle} /></div>:
+            <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
+        }
+        {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
         {/* TODO: This is Blackjacks specific */}
         <div>
             <p>King: {activeCards.king.toString()}</p>
@@ -99,7 +102,7 @@ export function Game() {
           </div>
           {isNomination && <div>
               Nomination Choice
-              <div onChange={e => setNominationIndex(e.target.value)}>
+              <div className={styles.nominationChoice} onChange={e => setNominationIndex(e.target.value)}>
                 {SUITS.map((suit, i) => <label className={styles.displayBlock} key={i}>{suit}<input type='radio' value={i} name='nominationOptions' /></label>)}
               </div>
           </div>}
