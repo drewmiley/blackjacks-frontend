@@ -33,7 +33,7 @@ export function Game() {
         hitService();
         setInit(true);
     }
-    const interval = setInterval(hitService, 3000);
+    const interval = setInterval(hitService, 1000);
     return () => clearInterval(interval);
   }, [isInit, hitService]);
 
@@ -55,17 +55,32 @@ export function Game() {
   };
   
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
-    const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
-    const isNominatedSuit = activeCards.value === null;
-    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
-    const lastPlayedText = `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}`;
+    const isNominatedSuit = activeCards.value === null;
+    const suit = isInitialPileCard && isNominatedSuit ?
+        SUITS.findIndex(d => d === lastCardsPlayed[lastCardsPlayed.length -1].suit) :
+        SUITS.findIndex(d => d === activeCards.suit);
+    const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit };
+    const lastPlayer = players[(turnIndex - 1 + players.length) % players.length].name;
+    const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
+        `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}` :
+        `${lastPlayer} picked up / missed turn`;
+    // TODO: This is all blackjacks specific
     return (
       <div>
-        {isNominatedSuit ? <div>Nominated suit is {activeCards.suit}</div> : <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>}
-        {!isInitialPileCard &&  <div>{lastPlayedText}</div>}
-        {/* TODO: This is Blackjacks specific */}
+        {isNominatedSuit ?
+            (
+                <div>
+                    <div className={styles.infoText}>
+                        {!isInitialPileCard ? `Nominated suit is ${activeCards.suit}` : `Initial card is ${NOMINATION_VALUE} of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
+                    </div>
+                    <Hand cards={[{ rank: 1, suit }]} hidden={false} style={defHandStyle} />
+                </div>
+            ) :
+            <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
+        }
+        {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
         <div>
             <p>King: {activeCards.king.toString()}</p>
             <p>Twos: {activeCards.two}</p>
@@ -77,10 +92,14 @@ export function Game() {
   
   const displayHandCards = (playerName, { players }) => {
       const hand = players.find(player => player.name === playerName).hand;
-      const displayedHand = hand
-        .map(card => ({ rank: CARD_VALUES.findIndex(d => d === card.value) + 1, suit: SUITS.findIndex(d => d === card.suit)}))
-        .sort((a, b) => 52 * a.suit - 52 * b.suit + a.rank - b.rank);
-      return <Hand cards={displayedHand} hidden={false} style={defHandStyle} />
+      if (hand) {
+        const displayedHand = hand
+          .map(card => ({ rank: CARD_VALUES.findIndex(d => d === card.value) + 1, suit: SUITS.findIndex(d => d === card.suit)}))
+          .sort((a, b) => 52 * a.suit - 52 * b.suit + a.rank - b.rank);
+        return <Hand cards={displayedHand} hidden={false} style={defHandStyle} />
+      } else {
+          return <div className={styles.infoText}>PLEASE REFRESH YOUR PAGE</div>
+      }
   };
   
   const displayTurnOptions = (playerName, { players, turnIndex }) => {
@@ -97,7 +116,7 @@ export function Game() {
           </div>
           {isNomination && <div>
               Nomination Choice
-              <div onChange={e => setNominationIndex(e.target.value)}>
+              <div className={styles.nominationChoice} onChange={e => setNominationIndex(e.target.value)}>
                 {SUITS.map((suit, i) => <label className={styles.displayBlock} key={i}>{suit}<input type='radio' value={i} name='nominationOptions' /></label>)}
               </div>
           </div>}
