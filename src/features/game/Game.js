@@ -33,7 +33,7 @@ export function Game() {
         hitService();
         setInit(true);
     }
-    const interval = setInterval(hitService, 3000);
+    const interval = setInterval(hitService, 1000);
     return () => clearInterval(interval);
   }, [isInit, hitService]);
 
