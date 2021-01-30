@@ -60,7 +60,9 @@ export function Game() {
     const card = { rank: CARD_VALUES.findIndex(d => d === activeCards.value) + 1, suit: SUITS.findIndex(d => d === activeCards.suit)};
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
-    const lastPlayedText = `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}`;
+    const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
+        `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}` :
+        `${lastPlayer} picked up / missed turn`;
     return (
       <div>
         {isNominatedSuit ? <div>Nominated suit is {activeCards.suit}</div> : <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>}
