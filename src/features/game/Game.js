@@ -53,7 +53,7 @@ export function Game() {
       </div>
     )
   };
-  
+
   const displayActiveCards = ({ activeCards, lastCardsPlayed, players, turnIndex }) => {
     //TODO: This is somewhat hacky
     const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
@@ -89,7 +89,7 @@ export function Game() {
       </div>
     )
   };
-  
+
   const displayHandCards = (playerName, { players }) => {
       const hand = players.find(player => player.name === playerName).hand;
       if (hand) {
@@ -101,7 +101,7 @@ export function Game() {
           return <div className={styles.infoText}>PLEASE REFRESH YOUR PAGE</div>
       }
   };
-  
+
   const displayTurnOptions = (playerName, { players, turnIndex }) => {
     const isPlayersTurn = players.findIndex(player => player.name === playerName) === turnIndex;
     if (isPlayersTurn) {
@@ -109,6 +109,11 @@ export function Game() {
       const displayCardsText = cards => cards.length ? cards.map(card => `${card.value} of ${card.suit}`).join(', ') : 'Miss Turn / Pick Up';
       const isNomination = parseInt(cardsIndex) >= 0 && possibleCardsToPlay[cardsIndex].length > 0
         && possibleCardsToPlay[cardsIndex][possibleCardsToPlay[cardsIndex].length - 1].value === NOMINATION_VALUE;
+      const onClickTakeTurn = () => {
+          dispatch(playCards(playerName, possibleCardsToPlay[cardsIndex], isNomination && SUITS[nominationIndex]));
+          setCardsIndex(undefined);
+          setNominationIndex(undefined);
+      }
       return (
         <>
           <div onChange={e => setCardsIndex(e.target.value)}>
@@ -120,7 +125,7 @@ export function Game() {
                 {SUITS.map((suit, i) => <label className={styles.displayBlock} key={i}>{suit}<input type='radio' value={i} name='nominationOptions' /></label>)}
               </div>
           </div>}
-          <button onClick={() => dispatch(playCards(playerName, possibleCardsToPlay[cardsIndex], isNomination && SUITS[nominationIndex]))}>Take Turn</button>
+          <button onClick={() => onClickTakeTurn()} disabled={!(parseInt(cardsIndex) >= 0) || (isNomination &&  !(parseInt(nominationIndex) >= 0))}>Take Turn</button>
         </>
       )
     } else {
