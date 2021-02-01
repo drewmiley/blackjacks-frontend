@@ -10,6 +10,10 @@ import {
 import styles from './Game.module.css';
 import { createGame } from '../setup/setupSlice';
 
+import ActiveCards from '../../components/ActiveCards';
+import HandCards from '../../components/HandCards';
+import PlayersState from '../../components/PlayersState';
+
 export function Game() {
   const { playerName } = useParams();
   const gameState = useSelector(selectGameState);
@@ -37,7 +41,7 @@ export function Game() {
     return () => clearInterval(interval);
   }, [isInit, hitService]);
 
-  const displayPlayersState = (playerName, { players, turnIndex }) => {
+  const displayPlayersState = ({ players, turnIndex }) => {
     return (
       <div>
         <table>
@@ -147,13 +151,13 @@ export function Game() {
     <div>
       {gameState && <div>
         <div className={styles.playersInfo}>
-          {displayPlayersState(playerName, gameState)}
+          <PlayersState players={gameState.players} turnIndex={gameState.turnIndex} />
         </div>
         <div id='active-cards'>
-          {displayActiveCards(gameState)}
+          <ActiveCards activeCards={gameState.activeCards} lastCardsPlayed={gameState.lastCardsPlayed} players={gameState.players} turnIndex={gameState.turnIndex} />
         </div>
         <div id='hands-cards'>
-          {displayHandCards(playerName, gameState)}
+          <HandCards playerName={playerName} players={gameState.players} />
         </div>
         <div id='turn-options'>
           {displayTurnOptions(playerName, gameState)}
