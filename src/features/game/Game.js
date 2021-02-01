@@ -12,6 +12,7 @@ import { createGame } from '../setup/setupSlice';
 
 import ActiveCards from '../../components/ActiveCards';
 import HandCards from '../../components/HandCards';
+import PlayAgainButton from '../../components/PlayAgainButton';
 import PlayersState from '../../components/PlayersState';
 
 export function Game() {
@@ -73,15 +74,6 @@ export function Game() {
     }
   };
 
-  const playAgainButton = (playerName, { players }) => {
-    const gameIsFinished = players.some(player => player.handSize === 0);
-    const playerNames = players.map(player => player.name);
-    const rotatedNames = [playerNames[playerNames.length - 1]].concat([playerNames.slice(0, playerNames.length - 1)]).join(',');
-    if (gameIsFinished) {
-        return <button onClick={() => dispatch(createGame(rotatedNames, true))}>Play Again</button>
-    }
-  }
-
   return (
     <div>
       {gameState && <div>
@@ -97,7 +89,7 @@ export function Game() {
         <div id='turn-options'>
           {displayTurnOptions(playerName, gameState)}
         </div>
-        {playAgainButton(playerName, gameState)}
+        <PlayAgainButton players={gameState.players} createGame={createGame} />
       </div>}
     </div>
   );
