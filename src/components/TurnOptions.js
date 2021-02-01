@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import styles from './SharedStyles.module.css';
-
-const CARD_VALUES = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
-const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
-const NOMINATION_VALUE = 'Ace';
+import styles from './Styles.module.css';
+import { NOMINATION_VALUE, SUITS } from '../app/constants';
 
 export default function TurnOptions({ playerName, players, turnIndex, playCards }) {
   const dispatch = useDispatch();

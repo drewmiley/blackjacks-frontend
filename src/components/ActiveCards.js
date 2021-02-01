@@ -1,14 +1,7 @@
 import React from "react";
 import { Hand } from 'react-deck-o-cards';
-import styles from './SharedStyles.module.css';
-
-const defHandStyle = {
-    maxHeight:'200px',
-    minHeight:'200px'
-};
-const CARD_VALUES = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
-const SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
-const NOMINATION_VALUE = 'Ace';
+import styles from './Styles.module.css';
+import { CARD_VALUES, HAND_STYLE, NOMINATION_VALUE, SUITS } from '../app/constants';
 
 export default function ActiveCards({ activeCards, lastCardsPlayed, players, turnIndex }) {
     //TODO: This is somewhat hacky
@@ -31,10 +24,10 @@ export default function ActiveCards({ activeCards, lastCardsPlayed, players, tur
                     <div className={styles.infoText}>
                         {!isInitialPileCard ? `Nominated suit is ${activeCards.suit}` : `Initial card is ${NOMINATION_VALUE} of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
                     </div>
-                    <Hand cards={[{ rank: 1, suit }]} hidden={false} style={defHandStyle} />
+                    <Hand cards={[{ rank: 1, suit }]} hidden={false} style={HAND_STYLE} />
                 </div>
             ) :
-            <div><Hand cards={[card]} hidden={false} style={defHandStyle} /></div>
+            <div><Hand cards={[card]} hidden={false} style={HAND_STYLE} /></div>
         }
         {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
         <div>

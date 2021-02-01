@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './SharedStyles.module.css';
+import styles from './Styles.module.css';
 
 export default function PlayersState({ players, turnIndex }) {
     return (
