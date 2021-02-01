@@ -1,8 +1,9 @@
 import React from "react";
+import styles from './SharedStyles.module.css';
 
 export default function PlayersState({ players, turnIndex }) {
     return (
-        <div>
+        <div styles={styles.playerInfo}>
           <table>
             <thead>
               <tr><th>Name</th>{players.map(player => <th>{player.name}</th>)}</tr>
