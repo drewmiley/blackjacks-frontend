@@ -1,11 +1,11 @@
 import React from "react";
 import { Hand } from 'react-deck-o-cards';
 import styles from './Styles.module.css';
-import { CARD_VALUES, HAND_STYLE, NOMINATION_VALUE, SUITS } from '../app/constants';
+import { CARD_VALUES, HAND_STYLE, INITIAL_HAND_SIZE, NOMINATION_VALUE, SUITS } from '../app/constants';
 
 export default function ActiveCards({ activeCards, lastCardsPlayed, players, turnIndex }) {
     //TODO: This is somewhat hacky
-    const isInitialPileCard = players.every(player => player.handSize === 7) && turnIndex === 0;
+    const isInitialPileCard = players.every(player => player.handSize === INITIAL_HAND_SIZE) && turnIndex === 0;
     const isNominatedSuit = activeCards.value === null;
     const suit = isInitialPileCard && isNominatedSuit ?
         SUITS.findIndex(d => d === lastCardsPlayed[lastCardsPlayed.length -1].suit) :
