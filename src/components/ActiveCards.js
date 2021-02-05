@@ -1,7 +1,7 @@
 import React from "react";
 import { Hand } from 'react-deck-o-cards';
 import styles from './Styles.module.css';
-import { CARD_VALUES, HAND_STYLE, INITIAL_HAND_SIZE, NOMINATION_VALUE, SUITS, BLACKJACKS, JACK_TWO_EIGHT, GAME_TYPE } from '../app/constants';
+import { CARD_VALUES, HAND_STYLE, INITIAL_HAND_SIZE, BLACKJACKS_NOMINATION_VALUE, JACKS_TWOS_EIGHTS_NOMINATION_VALUE, SUITS, BLACKJACKS, JACK_TWO_EIGHT, GAME_TYPE } from '../app/constants';
 
 export default function ActiveCards({ activeCards, lastCardsPlayed, players, turnIndex }) {
     //TODO: This is somewhat hacky
@@ -24,7 +24,7 @@ export default function ActiveCards({ activeCards, lastCardsPlayed, players, tur
                 (
                     <div>
                         <div className={styles.infoText}>
-                            {!isInitialPileCard ? `Nominated suit is ${activeCards.suit}` : `Initial card is ${NOMINATION_VALUE} of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
+                            {!isInitialPileCard ? `Nominated suit is ${activeCards.suit}` : `Initial card is ${BLACKJACKS_NOMINATION_VALUE} of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
                         </div>
                         <Hand cards={[{ rank: 1, suit }]} hidden={false} style={HAND_STYLE} />
                     </div>
