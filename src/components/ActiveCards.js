@@ -56,6 +56,7 @@ export default function ActiveCards({ activeCards, lastCardsPlayed, players, tur
             }
             {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
             <div>
+                <p>Eight: {activeCards.eight.toString()}</p>
                 <p>Twos: {activeCards.two}</p>
             </div>
           </div>
