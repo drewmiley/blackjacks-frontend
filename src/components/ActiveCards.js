@@ -1,7 +1,7 @@
 import React from "react";
 import { Hand } from 'react-deck-o-cards';
 import styles from './Styles.module.css';
-import { CARD_VALUES, HAND_STYLE, INITIAL_HAND_SIZE, NOMINATION_VALUE, SUITS } from '../app/constants';
+import { CARD_VALUES, HAND_STYLE, INITIAL_HAND_SIZE, NOMINATION_VALUE, SUITS, BLACKJACKS, JACK_TWO_EIGHT, GAME_TYPE } from '../app/constants';
 
 export default function ActiveCards({ activeCards, lastCardsPlayed, players, turnIndex }) {
     //TODO: This is somewhat hacky
@@ -15,26 +15,32 @@ export default function ActiveCards({ activeCards, lastCardsPlayed, players, tur
     const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
         `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}` :
         `${lastPlayer} picked up / missed turn`;
-    // TODO: This is all blackjacks specific
-    return (
-      <div>
-        {isNominatedSuit ?
-            (
-                <div>
-                    <div className={styles.infoText}>
-                        {!isInitialPileCard ? `Nominated suit is ${activeCards.suit}` : `Initial card is ${NOMINATION_VALUE} of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
+    const isBlackjacks = GAME_TYPE[activeCards.gameTypeIndex] === BLACKJACKS;
+    const isJackTwosAndEights = GAME_TYPE[activeCards.gameTypeIndex] === JACK_TWO_EIGHT;
+    if (isBlackjacks) {
+        return (
+          <div>
+            {isNominatedSuit ?
+                (
+                    <div>
+                        <div className={styles.infoText}>
+                            {!isInitialPileCard ? `Nominated suit is ${activeCards.suit}` : `Initial card is ${NOMINATION_VALUE} of ${lastCardsPlayed[lastCardsPlayed.length -1].suit}. Free choice`}
+                        </div>
+                        <Hand cards={[{ rank: 1, suit }]} hidden={false} style={HAND_STYLE} />
                     </div>
-                    <Hand cards={[{ rank: 1, suit }]} hidden={false} style={HAND_STYLE} />
-                </div>
-            ) :
-            <div><Hand cards={[card]} hidden={false} style={HAND_STYLE} /></div>
-        }
-        {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
-        <div>
-            <p>King: {activeCards.king.toString()}</p>
-            <p>Twos: {activeCards.two}</p>
-            <p>BlackJacks: {activeCards.blackjacks}</p>
-        </div>
-      </div>
-    )
+                ) :
+                <div><Hand cards={[card]} hidden={false} style={HAND_STYLE} /></div>
+            }
+            {!isInitialPileCard &&  <div className={styles.infoText}>{lastPlayedText}</div>}
+            <div>
+                <p>King: {activeCards.king.toString()}</p>
+                <p>Twos: {activeCards.two}</p>
+                <p>BlackJacks: {activeCards.blackjacks}</p>
+            </div>
+          </div>
+        )
+    }
+    if (isJackTwosAndEights) {
+
+    }
 }
