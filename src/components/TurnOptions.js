@@ -13,7 +13,7 @@ export default function TurnOptions({ activeCards, playerName, players, turnInde
   if (isPlayersTurn) {
     const possibleCardsToPlay = players.find(player => player.name === playerName).possibleCardsToPlay;
     const displayCardsText = cards => cards.length ? cards.map(card => `${card.value} of ${card.suit}`).join(', ') : 'Miss Turn / Pick Up';
-    const nominationValue = (gameTypeIndex) => {
+    const nominationValue = gameTypeIndex => {
         const isBlackjacks = GAME_TYPE[parseInt(gameTypeIndex)] === BLACKJACKS;
         const isJackTwosAndEights = GAME_TYPE[parseInt(gameTypeIndex)] === JACK_TWO_EIGHT;
         if (isBlackjacks) return BLACKJACKS_NOMINATION_VALUE;
