@@ -15,8 +15,8 @@ export default function ActiveCards({ activeCards, lastCardsPlayed, players, tur
     const lastPlayedText = lastCardsPlayed && lastCardsPlayed.length ?
         `${lastPlayer} played ${lastCardsPlayed.map(card => `${card.value} of ${card.suit}`).join(', ')}${isNominatedSuit ? `, nominated ${activeCards.suit}` : ''}` :
         `${lastPlayer} picked up / missed turn`;
-    const isBlackjacks = GAME_TYPE[activeCards.gameTypeIndex] === BLACKJACKS;
-    const isJackTwosAndEights = GAME_TYPE[activeCards.gameTypeIndex] === JACK_TWO_EIGHT;
+    const isBlackjacks = GAME_TYPE[parseInt(activeCards.gameTypeIndex)] === BLACKJACKS;
+    const isJackTwosAndEights = GAME_TYPE[parseInt(activeCards.gameTypeIndex)] === JACK_TWO_EIGHT;
     if (isBlackjacks) {
         return (
           <div>
