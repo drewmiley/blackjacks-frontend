@@ -22,13 +22,13 @@ export const setupSlice = createSlice({
 
 const { setSetupResponse, setDeleteResponse } = setupSlice.actions;
 
-export const createGame = (playerNames, clear = false) => async dispatch => {
+export const createGame = (playerNames, clear, gameTypeIndex = 0) => async dispatch => {
   const response = await fetch(`${API_URL}init`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ players: playerNames.split(','), clear })
+      body: JSON.stringify({ players: playerNames.split(','), clear, gameTypeIndex })
     });
   const jsonResponse = await response.json();
   dispatch(setSetupResponse(jsonResponse.message));

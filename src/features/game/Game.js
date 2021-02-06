@@ -44,7 +44,7 @@ export function Game() {
           <HandCards playerName={playerName} players={gameState.players} />
         </div>
         <div id='turn-options'>
-          <TurnOptions playerName={playerName} players={gameState.players} turnIndex={gameState.turnIndex} playCards={playCards} />
+          <TurnOptions playerName={playerName} activeCards={gameState.activeCards} players={gameState.players} turnIndex={gameState.turnIndex} playCards={playCards} />
         </div>
         <PlayAgainButton players={gameState.players} createGame={createGame} />
       </div>}
