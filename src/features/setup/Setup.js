@@ -12,7 +12,7 @@ export function Setup() {
   const setupResponse = useSelector(getSetupResponse);
   const deleteResponse = useSelector(getDeleteResponse);
   const dispatch = useDispatch();
-  const [playerNames, setPlayerNames] = useState('D,S');
+  const [playerNames, setPlayerNames] = useState('D');
   const [gameTypeIndex, setGameTypeIndex] = useState(0);
 
   return (
