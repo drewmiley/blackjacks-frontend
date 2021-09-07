@@ -34,10 +34,10 @@ export function Setup() {
         </div>
         <br></br>
             <div onChange={e => setAIPlayersTotal(e.target.value)}>
-                <label className={styles.displayBlock}>0<input type='radio' value={0} name='aiPlayersTotalOptions' /></label>
-                <label className={styles.displayBlock}>1<input type='radio' value={1} name='aiPlayersTotalOptions' /></label>
-                <label className={styles.displayBlock}>1<input type='radio' value={2} name='aiPlayersTotalOptions' /></label>
-                <label className={styles.displayBlock}>1<input type='radio' value={3} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>0 AI Players<input type='radio' value={0} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>1 AI Players<input type='radio' value={1} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>2 AI Players<input type='radio' value={2} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>3 AI Players<input type='radio' value={3} name='aiPlayersTotalOptions' /></label>
             </div>
             <br></br>
         <div>{setupResponse}</div>
