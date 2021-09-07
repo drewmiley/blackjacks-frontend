@@ -17,6 +17,7 @@ export default function ActiveCards({ activeCards, lastCardsPlayed, players, tur
         `${lastPlayer} picked up / missed turn`;
     const isBlackjacks = GAME_TYPE[parseInt(activeCards.gameTypeIndex)] === BLACKJACKS;
     const isJackTwosAndEights = GAME_TYPE[parseInt(activeCards.gameTypeIndex)] === JACK_TWO_EIGHT;
+    console.log(activeCards);
     if (isBlackjacks) {
         return (
           <div>

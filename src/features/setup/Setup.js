@@ -28,8 +28,8 @@ export function Setup() {
         />
         <br></br>
         <div onChange={e => setGameTypeIndex(e.target.value)}>
-            <label className={styles.displayBlock}>BlackJacks<input type='radio' value={0} name='gameTypeOptions' /></label>
-            <label className={styles.displayBlock}>Jacks, Twos and Eights<input type='radio' value={1} name='gameTypeOptions' /></label>
+            <label className={styles.displayBlock}>Jacks, Twos and Eights<input type='radio' value={0} name='gameTypeOptions' /></label>
+            <label className={styles.displayBlock}>BlackJacks<input type='radio' value={1} name='gameTypeOptions' /></label>
         </div>
         <br></br>
         <div>{setupResponse}</div>

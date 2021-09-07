@@ -9,4 +9,4 @@ export const JACKS_TWOS_EIGHTS_NOMINATION_VALUE = 'Jack';
 export const INITIAL_HAND_SIZE = 7;
 export const BLACKJACKS = 'blackjacks';
 export const JACK_TWO_EIGHT = 'jackstwosandeights';
-export const GAME_TYPE = [BLACKJACKS, JACK_TWO_EIGHT];
+export const GAME_TYPE = [JACK_TWO_EIGHT, BLACKJACKS];
