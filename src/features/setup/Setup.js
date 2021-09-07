@@ -14,10 +14,11 @@ export function Setup() {
   const dispatch = useDispatch();
   const [playerNames, setPlayerNames] = useState('D');
   const [gameTypeIndex, setGameTypeIndex] = useState(0);
+  const [aiPlayersTotal, setAIPlayersTotal] = useState(0);
 
   return (
     <div>
-        <button onClick={() => dispatch(createGame(playerNames, false, gameTypeIndex))}>
+        <button onClick={() => dispatch(createGame(playerNames, false, gameTypeIndex, aiPlayersTotal))}>
             Init Game With Players
         </button>
         <br></br>
@@ -32,6 +33,13 @@ export function Setup() {
             <label className={styles.displayBlock}>BlackJacks<input type='radio' value={1} name='gameTypeOptions' /></label>
         </div>
         <br></br>
+            <div onChange={e => setAIPlayersTotal(e.target.value)}>
+                <label className={styles.displayBlock}>0<input type='radio' value={0} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>1<input type='radio' value={1} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>1<input type='radio' value={2} name='aiPlayersTotalOptions' /></label>
+                <label className={styles.displayBlock}>1<input type='radio' value={3} name='aiPlayersTotalOptions' /></label>
+            </div>
+            <br></br>
         <div>{setupResponse}</div>
         <br></br>
         <button onClick={() => dispatch(deleteGame())}>
